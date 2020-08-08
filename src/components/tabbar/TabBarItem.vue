@@ -6,7 +6,7 @@
       <div v-else>
         <slot name="item-icon-active"></slot>
       </div>
-      <div :class="{active: isActive}">
+      <div :style="activeStyle">
         <slot name="item-text"></slot>
       </div>
     </div>
@@ -16,7 +16,11 @@
 export default {
   name: 'TabBarItem',
   props: {
-    path: String
+    path: String,
+    activeColor: {
+      type: String,
+      default: 'red'
+    }
   },
   data () {
     return {
@@ -27,6 +31,9 @@ export default {
     isActive () {
       // indexOf()方法返回某个指定的字符串值在字符串中首次出现的位置,不存在时返回-1
       return this.$route.path.indexOf(this.path) !== -1
+    },
+    activeStyle () {
+      return this.isActive ? { color: this.activeColor } : {}
     }
   },
   methods: {
@@ -50,8 +57,5 @@ export default {
     margin-top: 3px;
     vertical-align: middle;
     margin-bottom: 2px;
-  }
-  .active{
-    color: #00a6ff;
   }
 </style>
