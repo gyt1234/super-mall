@@ -1,0 +1,57 @@
+<template>
+    <div class="tab-bar-item" @click="itemClick">
+      <div v-if="!isActive">
+        <slot name="item-icon"></slot>
+      </div>
+      <div v-else>
+        <slot name="item-icon-active"></slot>
+      </div>
+      <div :class="{active: isActive}">
+        <slot name="item-text"></slot>
+      </div>
+    </div>
+</template>
+
+<script>
+export default {
+  name: 'TabBarItem',
+  props: {
+    path: String
+  },
+  data () {
+    return {
+      // isActive: false
+    }
+  },
+  computed: {
+    isActive () {
+      // indexOf()方法返回某个指定的字符串值在字符串中首次出现的位置,不存在时返回-1
+      return this.$route.path.indexOf(this.path) !== -1
+    }
+  },
+  methods: {
+    itemClick () {
+      this.$router.push(this.path)
+    }
+  }
+}
+</script>
+
+<style scoped>
+  .tab-bar-item{
+    flex: 1;
+    text-align: center;
+    height: 49px;
+    font-size: 14px;
+  }
+  .tab-bar-item img{
+    height: 24px;
+    width: 24px;
+    margin-top: 3px;
+    vertical-align: middle;
+    margin-bottom: 2px;
+  }
+  .active{
+    color: #00a6ff;
+  }
+</style>
