@@ -1,11 +1,12 @@
 <template>
-    <div id="home">
-      <!-- 导航 -->
+    <div>
       <nav-bar class="home-nav">
         <template v-slot:center>购物街</template>
       </nav-bar>
       <!-- 轮播图 -->
       <swiper :lists="banners"></swiper>
+      <!-- 推荐模块 -->
+      <recommend-view :recommends="recommends"></recommend-view>
     </div>
 </template>
 
@@ -13,12 +14,14 @@
 import NavBar from '@/components/common/navbar/NavBar'
 import { getHomeMultidata } from '@/network/home'
 import Swiper from '@/components/common/swiper/Swiper'
+import RecommendView from './childComps/RecommendView'
 
 export default {
   name: 'Home',
   components: {
     NavBar,
-    Swiper
+    Swiper,
+    RecommendView
   },
   data () {
     return {

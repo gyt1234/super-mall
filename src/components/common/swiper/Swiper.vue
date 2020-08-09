@@ -12,7 +12,12 @@
 export default {
   name: 'Swiper',
   props: {
-    lists: Array
+    lists: {
+      type: Array,
+      default () {
+        return []
+      }
+    }
   }
 }
 </script>
