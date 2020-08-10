@@ -1,44 +1,44 @@
 <template>
   <tab-bar>
-    <tab-bar-item path="/home" activeColor="#00a6ff">
+    <tab-bar-item path="/home">
       <template v-slot:item-icon>
         <img src="@/assets/img/tabbar/home.svg" />
       </template>
       <template v-slot:item-icon-active>
-        <img src="@/assets/img/tabbar/active1.svg" />
+        <img src="@/assets/img/tabbar/home_active.svg" />
       </template>
       <template v-slot:item-text>
         <div>首页</div>
       </template>
     </tab-bar-item>
-    <tab-bar-item path="/category" activeColor="#00a6ff">
+    <tab-bar-item path="/category">
       <template v-slot:item-icon>
-        <img src="@/assets/img/tabbar/eye.svg" />
+        <img src="@/assets/img/tabbar/category.svg" />
       </template>
       <template v-slot:item-icon-active>
-        <img src="@/assets/img/tabbar/active2.svg" />
+        <img src="@/assets/img/tabbar/category_active.svg" />
       </template>
       <template v-slot:item-text>
         <div>分类</div>
       </template>
     </tab-bar-item>
-    <tab-bar-item path="/shopcar" activeColor="#00a6ff">
+    <tab-bar-item path="/shopcar">
       <template v-slot:item-icon>
-        <img src="@/assets/img/tabbar/shopcar.svg" />
+        <img src="@/assets/img/tabbar/shopcart.svg" />
       </template>
       <template v-slot:item-icon-active>
-        <img src="@/assets/img/tabbar/active3.svg" />
+        <img src="@/assets/img/tabbar/shopcart_active.svg" />
       </template>
       <template v-slot:item-text>
         <div>购物车</div>
       </template>
     </tab-bar-item>
-    <tab-bar-item path="/profile" activeColor="#00a6ff">
+    <tab-bar-item path="/profile">
       <template v-slot:item-icon>
-        <img src="@/assets/img/tabbar/user.svg" />
+        <img src="@/assets/img/tabbar/profile.svg" />
       </template>
       <template v-slot:item-icon-active>
-        <img src="@/assets/img/tabbar/active4.svg" />
+        <img src="@/assets/img/tabbar/profile_active.svg" />
       </template>
       <template v-slot:item-text>
         <div>我的</div>

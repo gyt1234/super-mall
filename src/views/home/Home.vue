@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="home">
       <nav-bar class="home-nav">
         <template v-slot:center>购物街</template>
       </nav-bar>
@@ -7,6 +7,21 @@
       <swiper :lists="banners"></swiper>
       <!-- 推荐模块 -->
       <recommend-view :recommends="recommends"></recommend-view>
+      <feature-view></feature-view>
+      <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>2</li>
+        <li>2</li>
+        <li>2</li>
+        <li>2</li>
+        <li>2</li>
+        <li>2</li>
+        <li>2</li>
+        <li>2</li>
+        <li>2</li>
+        <li>2</li>
+      </ul>
     </div>
 </template>
 
@@ -15,13 +30,15 @@ import NavBar from '@/components/common/navbar/NavBar'
 import { getHomeMultidata } from '@/network/home'
 import Swiper from '@/components/common/swiper/Swiper'
 import RecommendView from './childComps/RecommendView'
+import FeatureView from './childComps/FeatureView'
 
 export default {
   name: 'Home',
   components: {
     NavBar,
     Swiper,
-    RecommendView
+    RecommendView,
+    FeatureView
   },
   data () {
     return {
@@ -42,8 +59,16 @@ export default {
 </script>
 
 <style scoped>
+  #home{
+    padding-top: 44px;
+  }
   .home-nav{
     background-color: var(--color-tint);
     color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9;
   }
 </style>
