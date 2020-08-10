@@ -3,68 +3,19 @@
       <nav-bar class="home-nav">
         <template v-slot:center>购物街</template>
       </nav-bar>
-      <!-- 轮播图 -->
-      <swiper :lists="banners"></swiper>
-      <!-- 推荐模块 -->
-      <recommend-view :recommends="recommends"></recommend-view>
-      <feature-view></feature-view>
-      <tab-control
-        :titles="['流行','新款','精选']"
-        class="tab-control"
-        @tabClick="tabClick"
-      >
-      </tab-control>
-      <goods-list :goods="showGoods"></goods-list>
-      <ul>
-        <li>1</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>1</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>1</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>1</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-      </ul>
+        <!-- 轮播图 -->
+        <swiper :lists="banners"></swiper>
+        <!-- 推荐模块 -->
+        <recommend-view :recommends="recommends"></recommend-view>
+        <feature-view></feature-view>
+        <!-- tab栏切换 -->
+        <tab-control
+          :titles="['流行','新款','精选']"
+          class="tab-control"
+          @tabClick="tabClick"
+        >
+        </tab-control>
+        <goods-list :goods="showGoods"></goods-list>
     </div>
 </template>
 
@@ -76,6 +27,7 @@ import RecommendView from './childComps/RecommendView'
 import FeatureView from './childComps/FeatureView'
 import TabControl from '@/components/content/tabControl/TabControl'
 import GoodsList from '@/components/content/goods/GoodsList'
+// import BScroll from 'better-scroll'
 
 export default {
   name: 'Home',
