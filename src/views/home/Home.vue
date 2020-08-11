@@ -3,6 +3,7 @@
       <nav-bar class="home-nav">
         <template v-slot:center>购物街</template>
       </nav-bar>
+      <scroll class="content" ref="scroll" :probe-type="3" @scroll="contentScroll">
         <!-- 轮播图 -->
         <swiper :lists="banners"></swiper>
         <!-- 推荐模块 -->
@@ -16,6 +17,8 @@
         >
         </tab-control>
         <goods-list :goods="showGoods"></goods-list>
+      </scroll>
+      <back-top @click.native="backClick" v-show="visible"></back-top>
     </div>
 </template>
 
@@ -27,7 +30,10 @@ import RecommendView from './childComps/RecommendView'
 import FeatureView from './childComps/FeatureView'
 import TabControl from '@/components/content/tabControl/TabControl'
 import GoodsList from '@/components/content/goods/GoodsList'
-// import BScroll from 'better-scroll'
+import BackTop from '@/components/content/backTop/BackTop'
+
+// 导入封装好的滚动
+import Scroll from '@/components/common/scroll/Scroll'
 
 export default {
   name: 'Home',
@@ -37,7 +43,9 @@ export default {
     RecommendView,
     FeatureView,
     TabControl,
-    GoodsList
+    GoodsList,
+    Scroll,
+    BackTop
   },
   data () {
     return {
@@ -48,7 +56,8 @@ export default {
         new: { page: 0, list: [] },
         sell: { page: 0, list: [] }
       },
-      currentType: 'pop'
+      currentType: 'pop',
+      visible: false
     }
   },
   computed: {
@@ -92,6 +101,18 @@ export default {
           this.currentType = 'sell'
           break
       }
+    },
+    /**
+     * 点击返回顶部处理事件
+     */
+    backClick () {
+      this.$refs.scroll.scrollTop(0, 0, 500)
+    },
+    /**
+     * 监听滚动位置判断回到顶部按钮的显示与隐藏
+     */
+    contentScroll (position) {
+      this.visible = (-position.y) > 1000
     }
   },
   created () {
@@ -105,7 +126,10 @@ export default {
 
 <style scoped>
   #home{
-    padding-top: 44px;
+    /*padding-top: 44px;*/
+    /* 当前视口高度 100vh意思是100%的视口高度 */
+    height: 100vh;
+    position:relative;
   }
   .home-nav{
     background-color: var(--color-tint);
@@ -121,4 +145,17 @@ export default {
     top: 44px;
     z-index: 9;
   }
+  .content{
+    overflow: hidden;
+    position: absolute;
+    top: 44px;
+    bottom: 49px;
+    left: 0;
+    right: 0;
+  }
+  /*.content{*/
+  /*  height: calc(100% - 93px);*/
+  /*  overflow: hidden;*/
+  /*  margin-top: 44px;*/
+  /*}*/
 </style>
