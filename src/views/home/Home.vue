@@ -3,7 +3,14 @@
       <nav-bar class="home-nav">
         <template v-slot:center>购物街</template>
       </nav-bar>
-      <scroll class="content" ref="scroll" :probe-type="3" @scroll="contentScroll">
+      <scroll
+        class="content"
+        ref="scroll"
+        :probe-type="3"
+        @scroll="contentScroll"
+        :pull-up-load="true"
+        @pullingUp="loadMore"
+      >
         <!-- 轮播图 -->
         <swiper :lists="banners"></swiper>
         <!-- 推荐模块 -->
@@ -84,6 +91,8 @@ export default {
       getHomeGoods(type, page).then(res => {
         this.goods[type].list.push(...res.data.list)
         this.goods[type].page += 1
+        // 完成上拉加载更多
+        this.$refs.scroll.finishPullUpLoad()
       })
     },
     /**
@@ -113,6 +122,12 @@ export default {
      */
     contentScroll (position) {
       this.visible = (-position.y) > 1000
+    },
+    /**
+     * 上拉加载更多
+     */
+    loadMore () {
+      this.getHomeGoods(this.currentType)
     }
   },
   created () {
