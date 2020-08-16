@@ -19,9 +19,7 @@ export default {
     // 判断是否要上拉加载更多
     pullUpLoad: {
       type: Boolean,
-      default () {
-        return {}
-      }
+      default: true
     }
   },
   data () {
