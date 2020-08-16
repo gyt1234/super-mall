@@ -3,6 +3,15 @@
       <nav-bar class="home-nav">
         <template v-slot:center>购物街</template>
       </nav-bar>
+      <!-- tab栏切换 -->
+      <tab-control
+        :titles="['流行','新款','精选']"
+        @tabClick="tabClick"
+        ref="tabControl1"
+        class="tab-control"
+        v-show="isTabFixed"
+      >
+      </tab-control>
       <scroll
         class="content"
         ref="scroll"
@@ -12,15 +21,15 @@
         @pullingUp="loadMore"
       >
         <!-- 轮播图 -->
-        <swiper :lists="banners"></swiper>
+        <swiper :lists="banners" @swiperImgLoad="swiperImgLoad"></swiper>
         <!-- 推荐模块 -->
         <recommend-view :recommends="recommends"></recommend-view>
         <feature-view></feature-view>
         <!-- tab栏切换 -->
         <tab-control
           :titles="['流行','新款','精选']"
-          class="tab-control"
           @tabClick="tabClick"
+          ref="tabControl2"
         >
         </tab-control>
         <goods-list :goods="showGoods"></goods-list>
@@ -64,7 +73,9 @@ export default {
         sell: { page: 0, list: [] }
       },
       currentType: 'pop',
-      visible: false
+      visible: false,
+      tabOffsetTop: 0,
+      isTabFixed: false
     }
   },
   computed: {
@@ -110,6 +121,8 @@ export default {
           this.currentType = 'sell'
           break
       }
+      this.$refs.tabControl1.currentIndex = index
+      this.$refs.tabControl2.currentIndex = index
     },
     /**
      * 点击返回顶部处理事件
@@ -118,16 +131,28 @@ export default {
       this.$refs.scroll.scrollTop(0, 0, 500)
     },
     /**
-     * 监听滚动位置判断回到顶部按钮的显示与隐藏
+     * 监听滚动位置
      */
     contentScroll (position) {
+      // 判断回到顶部按钮是否显示
       this.visible = (-position.y) > 1000
+      // 判断tabControl是否吸顶
+      this.isTabFixed = this.isTabFixed = (-position.y) > this.tabOffsetTop
     },
     /**
      * 上拉加载更多
      */
     loadMore () {
       this.getHomeGoods(this.currentType)
+      // 加载完重新计算可滚动的高度
+      this.$refs.scroll.scroll.refresh()
+    },
+    /**
+     * 监听图片加载完再计算tabControl的offsetTop
+     */
+    swiperImgLoad () {
+      // $el获取组件元素
+      this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop
     }
   },
   created () {
@@ -135,6 +160,9 @@ export default {
     this.getHomeGoods('pop')
     this.getHomeGoods('new')
     this.getHomeGoods('sell')
+  },
+  mounted () {
+
   }
 }
 </script>
@@ -149,15 +177,15 @@ export default {
   .home-nav{
     background-color: var(--color-tint);
     color: white;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 9;
+    /*在使用浏览器原生滚动时，为了使得导航不跟随滚动，使用如下样式*/
+    /*position: fixed;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*z-index: 9;*/
   }
   .tab-control{
-    position: sticky;
-    top: 44px;
+    position: relative;
     z-index: 9;
   }
   .content{
@@ -168,9 +196,4 @@ export default {
     left: 0;
     right: 0;
   }
-  /*.content{*/
-  /*  height: calc(100% - 93px);*/
-  /*  overflow: hidden;*/
-  /*  margin-top: 44px;*/
-  /*}*/
 </style>

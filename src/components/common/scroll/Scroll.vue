@@ -34,17 +34,23 @@ export default {
     this.scroll = new BScroll(this.$refs.wrapper, {
       // 使得div标签可以点击
       click: true,
+      // 实时监听
       probeType: this.probeType,
+      // 上拉加载更多
       pullUpLoad: this.pullUpLoad
     })
     // 实时监听滚动的位置
-    this.scroll.on('scroll', (position) => {
-      this.$emit('scroll', position)
-    })
+    if (this.probeType === 2 || this.probeType === 3) {
+      this.scroll.on('scroll', (position) => {
+        this.$emit('scroll', position)
+      })
+    }
     // 监听上拉加载更多事件
-    this.scroll.on('pullingUp', () => {
-      this.$emit('pullingUp')
-    })
+    if (this.pullUpLoad) {
+      this.scroll.on('pullingUp', () => {
+        this.$emit('pullingUp')
+      })
+    }
   },
   methods: {
     /**
@@ -57,7 +63,7 @@ export default {
      * 完成下拉加载更多
      */
     finishPullUpLoad () {
-      this.scroll.finishPullUp()
+      this.scroll && this.scroll.finishPullUp()
     }
   }
 }
