@@ -1,21 +1,25 @@
 <template>
   <div id="detail">
     <detail-nav-bar class="detail-nav"></detail-nav-bar>
-    <scroll class="content">
+    <scroll class="content" ref="scroll">
       <swiper :lists="topImages" height="150"></swiper>
       <detail-base-info :goods="goods"></detail-base-info>
       <detail-shop-info :shop="shop"></detail-shop-info>
+      <detail-goods-info :detail-info="detailInfo" @imageLoad="imageLoad"></detail-goods-info>
+      <detail-param-info :paramInfo="paramInfo"></detail-param-info>
     </scroll>
   </div>
 </template>
 
 <script>
 import DetailNavBar from './detailComps/DetailNavBar'
-import { getDetail, Goods, Shop } from '@/network/detail.js'
+import { getDetail, Goods, Shop, GoodsParams } from '@/network/detail.js'
 import Swiper from './detailComps/Swiper'
 import DetailBaseInfo from './detailComps/DetailBaseInfo'
 import DetailShopInfo from './detailComps/DetailShopInfo'
 import Scroll from '@/components/common/scroll/Scroll'
+import DetailGoodsInfo from './detailComps/DetailGoodsInfo'
+import DetailParamInfo from './detailComps/DetailParamInfo'
 
 export default {
   name: 'Detail',
@@ -24,7 +28,9 @@ export default {
     DetailNavBar,
     Swiper,
     DetailShopInfo,
-    Scroll
+    Scroll,
+    DetailGoodsInfo,
+    DetailParamInfo
   },
   data () {
     return {
@@ -32,7 +38,9 @@ export default {
       // 顶部轮播图片
       topImages: [],
       goods: {},
-      shop: {}
+      shop: {},
+      detailInfo: {},
+      paramInfo: {}
     }
   },
   methods: {
@@ -46,9 +54,19 @@ export default {
         this.topImages = res.result.itemInfo.topImages.slice(0, 4)
         // 获取商品信息
         this.goods = new Goods(data.itemInfo, data.columns, data.shopInfo.service)
-        // 获取·店铺信息
+        // 获取店铺信息
         this.shop = new Shop(data.shopInfo)
+        // 获取商品详情信息
+        this.detailInfo = data.detailInfo
+        // 获取参数信息
+        this.paramInfo = new GoodsParams(data.itemParams.info, data.itemParams.rule)
       })
+    },
+    /**
+     * 处理图片加载完
+     */
+    imageLoad () {
+      this.$refs.scroll.scroll.refresh()
     }
   },
   created () {
